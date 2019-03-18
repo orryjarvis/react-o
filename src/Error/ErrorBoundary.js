@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -25,11 +25,11 @@ class ErrorBoundary extends React.Component {
 ErrorBoundary.propTypes = {
   fallback: PropTypes.node.isRequired,
   children: PropTypes.node.isRequired,
-  onError: PropTypes.func // Takes error and info as parameters, i.e onError(error, info);
+  onError: PropTypes.func, // Takes error and info as parameters, i.e onError(error, info);
 };
 
 ErrorBoundary.defaultProps = {
-  fallback: null
+  fallback: null,
 };
 
 export default ErrorBoundary;

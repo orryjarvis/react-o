@@ -1,21 +1,16 @@
 import PropTypes from 'prop-types';
-import React from "react";
-import useMedia from "./useMedia";
+import useMedia from './useMedia';
 
-interface MediaProps {
-  query: string;
-  initial?: boolean;
-  children: React.ReactNode;
-}
-
-const Media = (props: MediaProps) => {
+const Media = props => {
   const { query, initial, children } = props;
-  const matches: boolean = useMedia(query, initial);
+  const matches = useMedia(query, initial);
   return matches ? children : null;
 };
 
 Media.propTypes = {
-  query: 
-}
+  query: PropTypes.string.isRequired,
+  initial: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default Media;

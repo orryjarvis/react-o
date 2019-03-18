@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-const useMedia = (query: string, initial: boolean) => {
+const useMedia = (query: string, initial: boolean): boolean => {
   const [matches, setMatches] = React.useState(initial);
 
   React.useEffect(() => {
     const mql = window.matchMedia(query);
-    const onChange = () => {
+    const onChange = (): void => {
       setMatches(mql.matches);
     };
 

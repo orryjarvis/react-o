@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 /*
  *   This component will render its children inside a hidden div.
@@ -27,7 +27,7 @@ class PreRender extends React.Component {
 
 PreRender.propTypes = {
   children: PropTypes.node.isRequired,
-  onError: PropTypes.func // Takes error and info as parameters, i.e onError(error, info);
+  onError: PropTypes.func, // Takes error and info as parameters, i.e onError(error, info);
 };
 
 export default PreRender;

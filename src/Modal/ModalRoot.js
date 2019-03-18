@@ -1,15 +1,15 @@
-import PropTypes from "prop-types";
-import React, { useMemo, useReducer, useCallback, useEffect } from "react";
-import { createPortal } from "react-dom";
-import ModalContext from "./ModalContext";
+import PropTypes from 'prop-types';
+import React, { useMemo, useReducer, useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import ModalContext from './ModalContext';
 
 const reducer = (state, action) => {
   const { name } = action;
   switch (action.type) {
-    case "UPDATE": {
+    case 'UPDATE': {
       if (!state.modals[name]) {
         // If 'SHOW' has not been run yet, get a base state
-        state = reducer(state, { type: "SHOW" });
+        state = reducer(state, { type: 'SHOW' });
       }
       return {
         ...state, // Keep other state the same (stack index)
@@ -17,12 +17,12 @@ const reducer = (state, action) => {
           ...state.modals, // Keep other existing modals open
           [name]: {
             ...state.modals[name], // Keep other info on the modal the same (name, index)
-            children: action.children // Update the children of this modal
-          }
-        }
+            children: action.children, // Update the children of this modal
+          },
+        },
       };
     }
-    case "SHOW": {
+    case 'SHOW': {
       return {
         ...state,
         nextIndex: state.nextIndex + 1, // Increment the index for the next modal
@@ -32,12 +32,12 @@ const reducer = (state, action) => {
             // Add modal by name
             ...state.modals[name], // Keep the children if 'UPDATE' was ran prior
             index: state.nextIndex, // Define a stack index
-            name // Track the modal name
-          }
-        }
+            name, // Track the modal name
+          },
+        },
       };
     }
-    case "HIDE": {
+    case 'HIDE': {
       // Take advantage of es6 object desctructuring to immutably remove the named property.
       // Eslint doesn't like that we don't use the variable we declare, so disable for that line.
       const { [name]: theModal, ...withoutModal } = state.modals; //eslint-disable-line no-unused-vars
@@ -46,7 +46,7 @@ const reducer = (state, action) => {
       // was the top of the stack. We only need to maintain relative ordering anyway.
       return {
         ...state,
-        modals: withoutModal
+        modals: withoutModal,
       };
     }
     default:
@@ -60,7 +60,7 @@ const ModalRoot = props => {
     onModalShown,
     onModalHidden,
     portalElement,
-    context
+    context,
   } = props;
 
   const [state, dispatch] = useReducer(reducer, { nextIndex: 0, modals: {} });
@@ -68,21 +68,21 @@ const ModalRoot = props => {
 
   const showModal = useCallback(
     name => {
-      return dispatch({ type: "SHOW", name });
+      return dispatch({ type: 'SHOW', name });
     },
     [dispatch]
   );
 
   const hideModal = useCallback(
     name => {
-      return dispatch({ type: "HIDE", name });
+      return dispatch({ type: 'HIDE', name });
     },
     [dispatch]
   );
 
   const updateModal = useCallback(
     (name, children) => {
-      return dispatch({ type: "UPDATE", name, children });
+      return dispatch({ type: 'UPDATE', name, children });
     },
     [dispatch]
   );
@@ -99,7 +99,7 @@ const ModalRoot = props => {
   const contextValue = useMemo(() => ({ showModal, hideModal, updateModal }), [
     showModal,
     hideModal,
-    updateModal
+    updateModal,
   ]);
 
   const ContextProvider = context ? context.Provider : ModalContext.Provider;
@@ -141,7 +141,7 @@ ModalRoot.propTypes = {
   // using that same context to be independent from other <Modal /> and
   // <ModalRoot /> components in the same tree- as they will differ by context.
   // This is intended to allow for extreme modal stacking flexibility.
-  context: PropTypes.any
+  context: PropTypes.any,
 };
 
 const Modals = props => {
@@ -155,9 +155,9 @@ Modals.propTypes = {
   modals: PropTypes.objectOf(
     PropTypes.shape({
       index: PropTypes.number.isRequired,
-      children: PropTypes.node
+      children: PropTypes.node,
     })
-  ).isRequired
+  ).isRequired,
 };
 
 export default ModalRoot;
