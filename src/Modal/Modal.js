@@ -1,14 +1,14 @@
-// Node Modules
-import PropTypes from 'prop-types';
-import { useRef, useEffect, useContext } from 'react';
-// Context
-import ModalContext from './ModalContext';
+import PropTypes from "prop-types";
+import { useRef, useEffect, useContext } from "react";
+import ModalContext from "./ModalContext";
 
 const createUniqueNameGenerator = seed => () => {
   return seed++;
 };
 
-const generateUniqueName = createUniqueNameGenerator(Math.floor(performance.now()));
+const generateUniqueName = createUniqueNameGenerator(
+  Math.floor(performance.now())
+);
 
 const Modal = props => {
   const { children, context } = props;
@@ -36,7 +36,7 @@ const Modal = props => {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  context: PropTypes.any,
+  context: PropTypes.any
 };
 
 export default Modal;

@@ -1,17 +1,15 @@
 import React from "react";
-
-interface PreRenderProps {
-  children: React.ReactNode;
-  onError?: (...args: any[]) => void;
-}
+import PropTypes from "prop-types";
 
 /*
  *   This component will render its children inside a hidden div.
  *   Rendering in the hidden div will have the affect of going through
  *   the rendered components lifecycle, and prefetching any dependencies
  *   which could be data, assets, or lazily-loaded components.
+ *   React will likely give hidden elements a lower priority in the future.
  */
-class PreRender extends React.Component<PreRenderProps> {
+class PreRender extends React.Component {
+  // Don't let errors bubble up
   componentDidCatch(error, info) {
     const { onError } = this.props;
     onError && onError(error, info);
@@ -26,5 +24,10 @@ class PreRender extends React.Component<PreRenderProps> {
     );
   }
 }
+
+PreRender.propTypes = {
+  children: PropTypes.node.isRequired,
+  onError: PropTypes.func // Takes error and info as parameters, i.e onError(error, info);
+};
 
 export default PreRender;

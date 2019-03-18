@@ -1,20 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-interface ErrorBoundaryProps {
-  fallback: React.ReactNode;
-  children: React.ReactNode;
-  onError?: (...args: any[]) => void;
-}
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
-
-class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
-> {
-  constructor(props: ErrorBoundaryProps) {
+class ErrorBoundary extends React.Component {
+  constructor(props) {
     super(props);
     this.state = { hasError: false };
   }
@@ -33,5 +21,15 @@ class ErrorBoundary extends React.Component<
     return children;
   }
 }
+
+ErrorBoundary.propTypes = {
+  fallback: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
+  onError: PropTypes.func // Takes error and info as parameters, i.e onError(error, info);
+};
+
+ErrorBoundary.defaultProps = {
+  fallback: null
+};
 
 export default ErrorBoundary;
